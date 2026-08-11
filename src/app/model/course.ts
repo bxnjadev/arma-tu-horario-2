@@ -29,6 +29,7 @@ export interface CourseSchedule {
 
     id : number;
     name : string;
+    section : number;
     classes : Class[];
 
 }

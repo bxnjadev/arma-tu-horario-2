@@ -51,8 +51,7 @@ export class Schedule {
                         continue;
                     }
     
-                    console.log("Asignando valor en la matriz");
-                    this.matrix[row][column] = this.matrix[row][column] + " " + courseSchedule.name;
+                    this.matrix[row][column] = this.matrix[row][column] + " " + courseSchedule.name + " - " +  classT.room + " "; 
                 }
 
          }

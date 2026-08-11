@@ -2,21 +2,21 @@
     <header>
         <h2 class="font-semibold text-xl mb-1 mb-4"> Horario </h2>
     </header>
-    <table class="rounded-md border-gray-200 w-full border-collapse border  my-0 sm:my-4">
+    <table class="text-rounded-md border-gray-200 w-full border-collapse border  my-0 sm:my-4">
         <thead class="rounded-md bg-blue-600 text-white border border-gray-200">
             <tr>
-                <th scope="col" class="font-normal text-sm sm:text-normal sm:px-2 sm:py-2 w-1/7"></th>
-                <th scope="col" class="font-normal text-sm sm:text-normal sm:px-1 sm:py-2 w-1/7">Lunes</th>
-                <th scope="col" class="font-normal text-sm sm:text-normal sm:px-1 sm:py-2 w-1/7">Martes</th>
-                <th scope="col" class="font-normal text-sm sm:text-normal sm:px-1 sm:py-2 w-1/7">Miércoles</th>
-                <th scope="col" class="font-normal text-sm sm:text-normal sm:px-1 sm:py-2 w-1/7">Jueves</th>
-                <th scope="col" class="font-normal text-sm sm:text-normal sm:px-1 sm:py-2 w-1/7">Viernes</th>
-                <th scope="col" class="font-normal text-sm sm:text-normal sm:px-1 sm:py-2 w-1/7">Sábado</th>
+                <th scope="col" class="font-normal text-sm sm:text-normal px-1 sm:px-2 sm:py-2 w-1/7"></th>
+                <th scope="col" class="font-normal text-sm sm:text-normal px-1 sm:px-1 sm:py-2 w-1/7">Lunes</th>
+                <th scope="col" class="font-normal text-sm sm:text-normal px-1 sm:px-1 sm:py-2 w-1/7">Martes</th>
+                <th scope="col" class="font-normal text-sm sm:text-normal px-1 sm:px-1 sm:py-2 w-1/7">Miércoles</th>
+                <th scope="col" class="font-normal text-sm sm:text-normal px-1 sm:px-1 sm:py-2 w-1/7">Jueves</th>
+                <th scope="col" class="font-normal text-sm sm:text-normal px-1 sm:px-1 sm:py-2 w-1/7">Viernes</th>
+                <th scope="col" class="font-normal text-sm sm:text-normal px-1 sm:px-1 sm:py-2 w-1/7">Sábado</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let row of getScheduleMatrix()" class="py-4">
-                <th class="font-normal text-center py-2 px-0 sm:px-2 border border-gray-200">{{ getCurrentCharAndIncrement() }}</th>
+                <th class="text-xs sm:text-sm font-normal font-normal text-center py-2 px-0 sm:px-2 border border-gray-200">{{ getCurrentCharAndIncrement() }}</th>
                 <th *ngFor="let cell of row" class="text-xs sm:text-sm font-normal py-2 px-4 border border-gray-200 text-center"> {{ cell }} </th>
             </tr>
         </tbody>

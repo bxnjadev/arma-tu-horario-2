@@ -51,6 +51,7 @@ export class ViewCourseComponent {
       let courseSchedule : CourseSchedule = {
         name : course.name,
         id : course.id,
+        section : course.section,
         classes : course.blocks
       };
 
