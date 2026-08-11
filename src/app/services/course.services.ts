@@ -12,7 +12,7 @@ export class CourseService {
 
     private httpClient : HttpClient = inject(HttpClient);
     private readonly baseUrl =
-        `${environment.apiUrl}/courses`;
+        `${environment.apiUrl}/courses/`;
 
     public all(page : number, searchedCourse : string) : Observable<PreviewCourse[]> {
         return this.httpClient.get<PreviewCourse[]>(this.baseUrl + "all?page=" + page + "&searchedCourseName=" + searchedCourse);       
