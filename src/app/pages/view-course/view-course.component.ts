@@ -15,7 +15,7 @@ import { Schedule } from '../../services/schedule';
 })
 export class ViewCourseComponent {
 
-    private readonly days : string[] = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"];
+    private readonly days : string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     private readonly schedule : Schedule = inject(Schedule);
     private viewCourseDelegator = inject(ViewCourseDelegator);
 

@@ -12,7 +12,7 @@ export class Schedule {
     private readonly daysToString : Map<string,number> = new Map()
     .set("Lunes", 0)
     .set("Martes", 1)
-    .set("Miercoles", 2)
+    .set("Miércoles", 2)
     .set("Jueves", 3)
     .set("Viernes", 4)
     .set("Sabado", 5);
