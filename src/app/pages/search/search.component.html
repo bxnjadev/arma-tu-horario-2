@@ -1,0 +1,62 @@
+<div class="sm:px-4">
+    <header class="mt-4 flex justify-between mb-4">
+        <h2 class="mx-2 font-semibold my-2 text-xl"> Asignaturas </h2>
+        <div class="flex">
+            <select name="apartment" id="type-aparment" class="w-50 border border-gray-200 pl-2 py-2 rounded-sm mr-2">
+                <option>Departamento</option>
+            </select>
+            <div class="pl-3 py-1 border border-gray-200 rounded-sm w-68 flex focus:border-blue-500 focus:ring focus:ring-blue-300">
+                <svg class="mr-2 my-1" fill="#000000" height="25px" width="25px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 488.4 488.4" xml:space="preserve">
+                <g>
+                    <g>
+                         <path d="M0,203.25c0,112.1,91.2,203.2,203.2,203.2c51.6,0,98.8-19.4,134.7-51.2l129.5,129.5c2.4,2.4,5.5,3.6,8.7,3.6
+                       s6.3-1.2,8.7-3.6c4.8-4.8,4.8-12.5,0-17.3l-129.6-129.5c31.8-35.9,51.2-83,51.2-134.7c0-112.1-91.2-203.2-203.2-203.2
+                       S0,91.15,0,203.25z M381.9,203.25c0,98.5-80.2,178.7-178.7,178.7s-178.7-80.2-178.7-178.7s80.2-178.7,178.7-178.7
+                       S381.9,104.65,381.9,203.25z"/>
+                     </g>
+                </g>
+                </svg>
+                <input (input)="onSearch($event)" class="w-full h-full focus:outline-none focus:ring-0">
+            </div> 
+        </div>
+    </header>
+
+    <section class="mb-4 w-full">
+        <table class="mb-4 w-full border border-gray-300">
+            <thead class=" bg-blue-600  ">
+                <tr>
+                    <th  scope="col" class="px-2 w-1/8 py-1 w-1/10 font-semibold text-normal text-white">NRC</th>
+                    <th  scope="col" class="px-4 w-2/8 py-1 font-semibold text-normal text-white">Título</th>
+                    <th  scope="col" class="px-4 w-1/8 py-1 font-semibold text-normal text-white">Sede</th>
+                    <th  scope="col" class="px-4 w-2/8 py-1 font-semibold text-normal text-white">Docente</th>
+                    <th  scope="col" class="px-4 w-1/8 py-1 font-semibold text-normal text-white">Paralelo</th>
+                    <th  scope="col" class="w-1/8 py-1 font-semibold text-normal text-white"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let coursePreview of getPreviewCourses()" class="border border-gray-300 even:bg-gray-100 odd:bg-white">
+                    <th class="text-sm font-semibold py-2 text-center">{{coursePreview.nrc}}</th>
+                    <th class="text-sm font-normal text-left py-2">{{splitIfIsMajor(coursePreview.name, 30)}}</th>
+                    <th class="text-sm font-normal py-2 text-center">{{coursePreview.universityType}}</th>
+                    <th class="text-sm font-normal py-2 text-left">{{ proffesorToText(coursePreview) }}</th>
+                    <th class="text-sm font-semibold py-2  ">{{coursePreview.section}}</th>
+                    <th class="flex justify-center">
+                        <a href="javascript:void(0)" (click)="searchCourse(coursePreview.id)" class="text-sm font-normal py-2 font-normal text-sky-600 ">
+                            <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.6492 11.2501L12.7904 6.53852L13.8346 5.46167L20.5774 12.0001L13.8346 18.5385L12.7904 17.4617L17.6492 12.7501H3V11.2501H17.6492Z" fill="#080341"/>
+                            </svg>
+                        </a>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <footer class="flex justify-between">
+            <div>
+                <button (click)="previous()" class ="border bg-blue-600 border-gray-300 text-white cursor-pointer py-2 px-4 rounded-md text-sm mr-4">Anterior</button>
+                <button (click)="next()" class="border bg-blue-600 border-gray-300 text-white cursor-pointer py-2 px-4 rounded-md text-sm ">Siguiente</button>
+            </div>
+            <p class="font-semibold font-sm px-2 py-1">Página {{getPage()}}</p>
+        </footer>
+    </section>
+</div>
