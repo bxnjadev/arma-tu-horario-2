@@ -27,6 +27,10 @@ export class ShowCoursesSelectedComponent {
     this.schedule.deleteCourse(id);
   }
 
+  public getTotalHours(): number {
+    return this.schedule.getCountHours();
+  }
+
   trckByCourseId(index : number, course : CourseSchedule) {
     return course.id;
   }

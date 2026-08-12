@@ -23,6 +23,8 @@ export class Schedule {
 
     private readonly courseList : CourseSchedule[] = [];
 
+    private countHours : number = 0;
+
     private updateCourseList() : void {
         this.courseList.length = 0;
 
@@ -30,8 +32,12 @@ export class Schedule {
             this.courses.values());
     }
 
+    public getCountHours() : number {
+        return this.countHours;
+    }
+
     public addCourse(courseSchedule : CourseSchedule) : void {
-        console.log("Agregando a la matriz");
+        this.countHours += courseSchedule.hours;
         this.courses.set(courseSchedule.id, courseSchedule);
 
          for(let classT of courseSchedule.classes) {
@@ -60,9 +66,12 @@ export class Schedule {
 
     public deleteCourse(id : number) {
         let course = this.courses.get(id);
+       
         if(course === undefined) {
             return;
         }
+
+        this.countHours -= course?.hours;
 
         for(let classT of course.classes) {
             let blocks = ScheduleHelper.getHours(classT.blockValue);

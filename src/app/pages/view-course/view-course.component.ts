@@ -52,7 +52,8 @@ export class ViewCourseComponent {
         name : course.name,
         id : course.id,
         section : course.section,
-        classes : course.blocks
+        classes : course.blocks,
+        hours : course.hours
       };
 
       this.schedule.addCourse(

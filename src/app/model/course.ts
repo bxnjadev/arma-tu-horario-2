@@ -7,6 +7,7 @@ export interface Course {
     id : number;
     name : string;
     description : string;
+    hours : number;
     courseNumber : number;
     section : number;
     period : string;
@@ -30,6 +31,7 @@ export interface CourseSchedule {
     id : number;
     name : string;
     section : number;
+    hours : number;
     classes : Class[];
 
 }
