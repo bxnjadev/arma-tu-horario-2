@@ -50,7 +50,13 @@ export class Schedule {
             return;
         }
 
-        this.countHours += courseSchedule.hours;
+        let sectionString = courseSchedule.section.toString();
+        console.log("Section = " + sectionString);
+        if(!sectionString.startsWith("L")) {
+            this.countHours += courseSchedule.hours;
+        
+        }
+
         this.courses.set(courseSchedule.id, courseSchedule);
 
          for(let classT of courseSchedule.classes) {
@@ -98,7 +104,11 @@ export class Schedule {
             return;
         }
 
-        this.countHours -= course?.hours;
+        let section = course.section.toString();
+        if(!section.startsWith("L")) {
+            this.countHours -= course?.hours;
+        }
+        
 
         for(let classT of course.classes) {
             let blocks = ScheduleHelper.getHours(classT.blockValue);
