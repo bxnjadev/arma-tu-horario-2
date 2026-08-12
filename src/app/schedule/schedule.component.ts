@@ -1,6 +1,7 @@
 import { NgFor } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, HostListener, inject } from '@angular/core';
 import { Schedule } from '../services/schedule';
+import { CourseBlockGroup } from '../model/course';
 
 @Component({
   selector: 'app-schedule',
@@ -8,7 +9,10 @@ import { Schedule } from '../services/schedule';
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
-export class ScheduleComponent {
+export class ScheduleComponent  {
+
+  private screenWidthLittle = 786;
+  private screenSmall = window.innerWidth < this.screenWidthLittle;
 
   private currentChar : string = 'A'; 
   private readonly hours : Map<string, string> = new Map()
@@ -35,8 +39,31 @@ export class ScheduleComponent {
     return actual + " (" + this.hours.get(actual) + ")";
   }
 
-  getScheduleMatrix() : string[][] {
+  @HostListener("window:resize")
+  onResize() : void {
+    this.screenSmall = window.innerWidth < this.screenWidthLittle;
+  }
+
+  getScheduleMatrix() : CourseBlockGroup[][] {
     return this.schedule.getMatrix();
   }
+
+  public blockToText(courseBlockGroup : CourseBlockGroup) : string {
+
+        if(this.screenSmall) {
+          console.log("Width menor");
+          return courseBlockGroup.letter;
+        }
+
+        console.log("Width normal");
+        let text = '';
+
+        for(let group of courseBlockGroup.group_ids) {
+            text += group.name + " " + group.room + " ";
+        }
+
+        return text;
+  }
+
 
 }

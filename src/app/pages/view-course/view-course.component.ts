@@ -15,6 +15,7 @@ import { Schedule } from '../../services/schedule';
 })
 export class ViewCourseComponent {
 
+    private readonly initial_letter_character = 65;
     private readonly days : string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     private readonly schedule : Schedule = inject(Schedule);
     private viewCourseDelegator = inject(ViewCourseDelegator);
@@ -53,7 +54,8 @@ export class ViewCourseComponent {
         id : course.id,
         section : course.section,
         classes : course.blocks,
-        hours : course.hours
+        hours : course.hours,
+        letter : String.fromCharCode(this.initial_letter_character + this.schedule.totalCourses())
       };
 
       this.schedule.addCourse(

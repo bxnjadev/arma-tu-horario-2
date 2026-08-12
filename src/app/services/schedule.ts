@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { CourseSchedule } from "../model/course";
+import { CourseBlockGroup, CourseSchedule } from "../model/course";
 import { Matrixs } from "../util/matrixs";
 import { ScheduleHelper } from "../util/schedule.helper";
 import { StringMatrixFunctional } from "../util/string.matrix.functional";
@@ -17,13 +17,17 @@ export class Schedule {
     .set("Viernes", 4)
     .set("Sabado", 5);
 
-    private readonly matrix : string[][]= Matrixs.create("", 7, 6);
+    private matrix : CourseBlockGroup[][];
 
     private readonly courses : Map<number,CourseSchedule> = new Map(); 
 
     private readonly courseList : CourseSchedule[] = [];
 
     private countHours : number = 0;
+
+    constructor() {
+        this.matrix = Matrixs.createFactory( () => ({ letter : '', group_ids: [] }), 7, 6);
+    }
 
     private updateCourseList() : void {
         this.courseList.length = 0;
@@ -36,7 +40,16 @@ export class Schedule {
         return this.countHours;
     }
 
+    public totalCourses() : number {
+        return this.courseList.length;
+    }
+
     public addCourse(courseSchedule : CourseSchedule) : void {
+
+        if(this.courses.has(courseSchedule.id)) {
+            return;
+        }
+
         this.countHours += courseSchedule.hours;
         this.courses.set(courseSchedule.id, courseSchedule);
 
@@ -50,17 +63,26 @@ export class Schedule {
 
                     let row = ScheduleHelper.getBlockAsInt(block);
                     let column = this.daysToString.get(classT.day);
-
-                    console.log(row + " , " + column);
-                    
+        
                     if(column === undefined) {
                         continue;
                     }
     
-                    this.matrix[row][column] = this.matrix[row][column] + " " + courseSchedule.name + " - " +  classT.room + " "; 
+                    let courseGroup = this.matrix[row][column];
+                    courseGroup.group_ids.push({
+                        name : courseSchedule.name,
+                        room : classT.room,
+                        id : courseSchedule.id
+                    });
+
+                    courseGroup.letter += courseSchedule.letter + ",";
                 }
 
          }
+
+
+        console.log(this.matrix);
+
         this.updateCourseList();
     }
 
@@ -85,7 +107,29 @@ export class Schedule {
                     continue;
                 }
 
-                this.matrix[row][column] = "";
+                let courseGroup = this.matrix[row][column];
+                let index_value = -1;
+
+                for(let i = 0; i < courseGroup.group_ids.length; i++) {
+                    let group = courseGroup.group_ids[i];
+
+                    if(group.id == id) {
+                        index_value = i;
+                        break;
+                    }
+                }
+                
+                if(index_value != -1) {
+                    console.log("Eliminado = ", index_value);
+                    courseGroup.group_ids.splice(index_value, 1);
+                }
+                
+                if(courseGroup.group_ids.length == 0) {
+                    courseGroup.letter = '';
+                    
+                }else {
+                    courseGroup.letter = courseGroup.letter.replace(course.letter, "");
+                }
             }
         }
 

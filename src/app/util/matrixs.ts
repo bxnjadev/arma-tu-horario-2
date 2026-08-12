@@ -37,6 +37,28 @@ export class Matrixs {
         return matrix;
     } 
 
+
+    public static createFactory<T>(
+    factory: () => T,
+    rows: number,
+    columns: number
+): T[][] {
+
+    let matrix: T[][] = [];
+
+    for (let i = 0; i < rows; i++) {
+        let row: T[] = [];
+
+        for (let j = 0; j < columns; j++) {
+            row.push(factory());
+        }
+
+        matrix.push(row);
+    }
+
+    return matrix;
+}
+
     /**
      * Fill the matrix with a specific value of type T
      * @param matrix the matrix where the values are filled

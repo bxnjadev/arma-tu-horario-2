@@ -17,7 +17,7 @@
         <tbody>
             <tr *ngFor="let row of getScheduleMatrix()" class="py-4">
                 <th class="text-xs sm:text-sm font-normal font-normal text-center py-2 px-0 sm:px-2 border border-gray-200">{{ getCurrentCharAndIncrement() }}</th>
-                <th *ngFor="let cell of row" class="text-xs sm:text-sm font-normal py-2 px-4 border border-gray-200 text-center"> {{ cell }} </th>
+                <th *ngFor="let cell of row" class="text-normal font-normal py-2 px-4 border border-gray-200 text-center"> {{ blockToText(cell) }} </th>
             </tr>
         </tbody>
     </table>

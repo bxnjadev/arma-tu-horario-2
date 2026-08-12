@@ -28,10 +28,23 @@ export interface Class {
 
 export interface CourseSchedule {
 
+    letter : string;
     id : number;
     name : string;
     section : number;
     hours : number;
     classes : Class[];
 
+}
+
+export interface CourseBlockGroup {
+    letter : string;
+    group_ids : CourseBlock[];
+
+}
+
+export interface CourseBlock {
+    name : string;
+    room : string;
+    id : number;
 }
