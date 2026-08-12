@@ -51,11 +51,9 @@ export class ScheduleComponent  {
   public blockToText(courseBlockGroup : CourseBlockGroup) : string {
 
         if(this.screenSmall) {
-          console.log("Width menor");
           return courseBlockGroup.letter;
         }
 
-        console.log("Width normal");
         let text = '';
 
         for(let group of courseBlockGroup.group_ids) {

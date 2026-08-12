@@ -74,8 +74,13 @@ export class Schedule {
                         room : classT.room,
                         id : courseSchedule.id
                     });
+                    
+                    if(courseGroup.group_ids.length == 1) {
+                        courseGroup.letter = courseSchedule.letter;
+                    } else {
+                        courseGroup.letter += ", " + courseSchedule.letter;
+                    }
 
-                    courseGroup.letter += courseSchedule.letter + ",";
                 }
 
          }
