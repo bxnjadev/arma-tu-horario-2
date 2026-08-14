@@ -2,6 +2,7 @@ import { NgFor } from '@angular/common';
 import { AfterViewChecked, AfterViewInit, Component, HostListener, inject } from '@angular/core';
 import { Schedule } from '../services/schedule';
 import { CourseBlockGroup } from '../model/course';
+import { ExcelScheduleDownloadService } from '../services/excel.schelude.download.service';
 
 @Component({
   selector: 'app-schedule',
@@ -20,11 +21,12 @@ export class ScheduleComponent  {
   .set("B", "09:55 - 11:25")
   .set("C", "11:40 - 13:10")
   .set("D", "14:30 - 16:00")
-  .set("E", "17:15 - 18:00")
+  .set("E", "16:15 - 17:45")
   .set("F", "18:00 - 19:30")
   .set("G", "19:45 - 21:15");
   
   private readonly schedule : Schedule = inject(Schedule);
+  private readonly excelDownloaded : ExcelScheduleDownloadService = inject(ExcelScheduleDownloadService);
 
   getCurrentCharAndIncrement() {
     let actual = this.currentChar;
@@ -42,6 +44,10 @@ export class ScheduleComponent  {
   @HostListener("window:resize")
   onResize() : void {
     this.screenSmall = window.innerWidth < this.screenWidthLittle;
+  }
+
+  downloadExcel() {
+    this.excelDownloaded.generateScheduleExcel(this.schedule.getMatrix());
   }
 
   getScheduleMatrix() : CourseBlockGroup[][] {
