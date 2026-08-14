@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { NgFor, NgClass, NgStyle } from '@angular/common';
 import { AfterViewChecked, AfterViewInit, Component, HostListener, inject } from '@angular/core';
 import { Schedule } from '../services/schedule';
 import { CourseBlockGroup } from '../model/course';
@@ -6,7 +6,7 @@ import { ExcelScheduleDownloadService } from '../services/excel.schelude.downloa
 
 @Component({
   selector: 'app-schedule',
-  imports: [NgFor],
+  imports: [NgFor, NgClass, NgStyle],
   templateUrl: './schedule.component.html',
   styleUrl: './schedule.component.css'
 })
@@ -44,6 +44,22 @@ export class ScheduleComponent  {
   @HostListener("window:resize")
   onResize() : void {
     this.screenSmall = window.innerWidth < this.screenWidthLittle;
+  }
+
+  public getCellStyle(cell : CourseBlockGroup) {
+    if(cell.group_ids.length > 1) {
+        return {
+        'background-color': '#facc15',
+        'color': '#000000',
+        'text-decoration': 'underline'
+      };
+    }
+    console.log("No");
+    return {
+        'background-color': cell.color,
+        'color': '#000000',
+        'text-decoration': 'underline'
+      };
   }
 
   downloadExcel() {

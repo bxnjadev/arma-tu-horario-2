@@ -29,6 +29,7 @@ export interface Class {
 export interface CourseSchedule {
 
     letter : string;
+    color : string;
     id : number;
     name : string;
     section : number;
@@ -38,6 +39,7 @@ export interface CourseSchedule {
 }
 
 export interface CourseBlockGroup {
+    color : string;
     letter : string;
     group_ids : CourseBlock[];
 

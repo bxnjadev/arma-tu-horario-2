@@ -17,6 +17,20 @@ export class Schedule {
     .set("Viernes", 4)
     .set("Sabado", 5);
 
+    private readonly COLORS_AVAILABLE = [
+        "#4CAF72",
+        "#5B8FD9",
+        "#8A6BBE",
+        "#D47FA5",
+        "#D98A5B",
+        "#D6B84C",
+        "#D66B6B",
+        "#5BAFC1",
+        "#55A99F",
+        "#A17A52"
+    ];
+    private readonly COLORS_TAKE : string[] = []
+
     private matrix : CourseBlockGroup[][];
 
     private readonly courses : Map<number,CourseSchedule> = new Map(); 
@@ -26,7 +40,22 @@ export class Schedule {
     private countHours : number = 0;
 
     constructor() {
-        this.matrix = Matrixs.createFactory( () => ({ letter : '', group_ids: [] }), 7, 6);
+        this.matrix = Matrixs.createFactory( () => ({ letter : '', color: '', group_ids: [] }), 7, 6);
+    }
+
+    private takeRandomColor() : string {
+        const index = Math.floor(Math.random() * this.COLORS_AVAILABLE.length);
+        const element = this.COLORS_AVAILABLE.splice(index, 1)[0];
+
+        this.COLORS_TAKE.push(element);
+        return element;
+    }
+
+    private removeColor(color : string) : void {
+        const index = this.COLORS_TAKE.indexOf(color);
+        this.COLORS_TAKE.splice(index, 1);
+
+        this.COLORS_AVAILABLE.push(color);
     }
 
     private updateCourseList() : void {
@@ -50,8 +79,10 @@ export class Schedule {
             return;
         }
 
+        courseSchedule.color = this.takeRandomColor();
+
         let sectionString = courseSchedule.section.toString();
-        console.log("Section = " + sectionString);
+
         if(!sectionString.startsWith("L")) {
             this.countHours += courseSchedule.hours;
         
@@ -60,10 +91,7 @@ export class Schedule {
         this.courses.set(courseSchedule.id, courseSchedule);
 
          for(let classT of courseSchedule.classes) {
-                console.log(classT);
                 let blocks = ScheduleHelper.getHours(classT.blockValue);
-
-                console.log(blocks);
 
                 for(let block of blocks) {
 
@@ -75,10 +103,11 @@ export class Schedule {
                     }
     
                     let courseGroup = this.matrix[row][column];
+                    
                     courseGroup.group_ids.push({
                         name : courseSchedule.name,
                         room : classT.room,
-                        id : courseSchedule.id
+                        id : courseSchedule.id,
                     });
                     
                     if(courseGroup.group_ids.length == 1) {
@@ -86,6 +115,8 @@ export class Schedule {
                     } else {
                         courseGroup.letter += ", " + courseSchedule.letter;
                     }
+
+                    courseGroup.color = courseSchedule.color;
 
                 }
 
@@ -135,7 +166,6 @@ export class Schedule {
                 }
                 
                 if(index_value != -1) {
-                    console.log("Eliminado = ", index_value);
                     courseGroup.group_ids.splice(index_value, 1);
                 }
                 
@@ -145,6 +175,10 @@ export class Schedule {
                 }else {
                     courseGroup.letter = courseGroup.letter.replace(course.letter, "");
                 }
+
+                let color = courseGroup.color;
+                this.removeColor(color);
+                courseGroup.color = '';
             }
         }
 
