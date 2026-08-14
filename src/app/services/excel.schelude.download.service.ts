@@ -13,7 +13,7 @@ export class ExcelScheduleDownloadService {
     private readonly rows = [2, 3,4,5,6,7,8]
     private readonly columns = ["B", "C", "D", "E", "F", "G"]
 
-    private readonly blocks = ['A','B','C','D','E','F'];
+    private readonly blocks = ['A','B','C','D','E','F', "G"];
     private readonly days = ['Lunes','Martes','Miércoles','Jueves','Viernes']
 
     private readonly rootFile = "/assets/plantillas/plantilla.xlsx";
