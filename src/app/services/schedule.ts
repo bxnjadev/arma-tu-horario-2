@@ -18,7 +18,6 @@ export class Schedule {
     .set("Sabado", 5);
 
     private readonly COLORS_AVAILABLE = [
-        "#4CAF72",
         "#5B8FD9",
         "#8A6BBE",
         "#D47FA5",
@@ -176,9 +175,21 @@ export class Schedule {
                     courseGroup.letter = courseGroup.letter.replace(course.letter, "");
                 }
 
-                let color = courseGroup.color;
-                this.removeColor(color);
-                courseGroup.color = '';
+
+                let sizeCourseGroup = courseGroup.group_ids.length;
+                if(sizeCourseGroup == 0) {
+                    let color = courseGroup.color;
+                    this.removeColor(color);
+                    courseGroup.color = '';
+                } else if(sizeCourseGroup == 1) {
+                    let courseId = courseGroup.group_ids[0].id;
+                    let course = this.courses.get(courseId);
+
+                    if(course !== undefined) {
+                        courseGroup.color = course.color;
+                    }
+                }
+
             }
         }
 

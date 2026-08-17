@@ -56,6 +56,8 @@ export class ViewCourseComponent {
         section : course.section,
         classes : course.blocks,
         hours : course.hours,
+        proffesor : course.professors[0].name,
+        nrc : course.nrc,
         letter : String.fromCharCode(this.initial_letter_character + this.schedule.totalCourses())
       };
 

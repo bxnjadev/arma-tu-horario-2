@@ -63,7 +63,7 @@ export class ScheduleComponent  {
   }
 
   downloadExcel() {
-    this.excelDownloaded.generateScheduleExcel(this.schedule.getMatrix());
+    this.excelDownloaded.generateScheduleExcel(this.schedule.getMatrix(), this.schedule.getCourses());
   }
 
   getScheduleMatrix() : CourseBlockGroup[][] {

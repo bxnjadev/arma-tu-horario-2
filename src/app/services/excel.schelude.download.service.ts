@@ -3,7 +3,7 @@ import { inject, Injectable } from "@angular/core";
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import { CourseBlockGroup } from "../model/course";
+import { CourseBlockGroup, CourseSchedule } from "../model/course";
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +11,9 @@ import { CourseBlockGroup } from "../model/course";
 export class ExcelScheduleDownloadService { 
 
     private readonly rows = [2, 3,4,5,6,7,8]
+
+    private courseHeaders = ["NRC", "Título", "Docente", "Paralelo", "Créditos"]
+
     private readonly columns = ["B", "C", "D", "E", "F", "G"]
 
     private readonly blocks = ['A','B','C','D','E','F', "G"];
@@ -39,7 +42,9 @@ export class ExcelScheduleDownloadService {
         return `A1:${ultimaColumna}${ultimaFila}`;
     }
 
-    public generateScheduleExcel(groups : CourseBlockGroup[][]) : void {
+    public generateScheduleExcel(groups : CourseBlockGroup[][],
+        courses : CourseSchedule[]
+    ) : void {
         
          const workbook = XLSX.utils.book_new();
 
@@ -66,10 +71,7 @@ export class ExcelScheduleDownloadService {
                 }
         }
 
-        console.log("Holaaaaa");
-
         for(let i = 0; i < groups.length; i++) {
-            console.log(" Hola 1 ");
             
             for(let j = 0; j < groups[i].length; j++) {
                 let group = groups[i][j];
@@ -96,7 +98,53 @@ export class ExcelScheduleDownloadService {
 
         }
 
-        worksheet['!ref'] = this.obtenerRango(this.blocks, this.columns);
+        
+        let start_row = 10;
+        for(let j = 0; j < this.courseHeaders.length; j++) {
+            let coord = this.blocks[j] + start_row;
+            console.log("Coord = " + coord);
+            console.log(this.courseHeaders[j]);
+            worksheet[coord] = {
+                t: 's',
+                v: this.courseHeaders[j]
+            }
+        }
+
+        start_row++;
+        for(let i=0; i < courses.length; i++) {
+            let course = courses[i];
+            let row = i + start_row;
+            worksheet["A" + row] = {
+                t:'s',
+                v:course.nrc
+            }
+
+
+            worksheet["B" + row] = {
+                t: 's',
+                v: course.name
+            }
+
+            worksheet["C" + row] = {
+                t: 's',
+                v: course.proffesor
+            }
+            worksheet["D" + row] = {
+                t: 's',
+                v: course.section
+            }
+
+             worksheet["E" + row] = {
+                t: 's',
+                v: course.hours
+            }
+
+        }
+
+
+        //worksheet['!ref'] = this.obtenerRango(this.blocks, this.columns);
+
+        worksheet['!ref'] = `A1:F${30}`;
 
         XLSX.utils.book_append_sheet(
             workbook,
